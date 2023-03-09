@@ -1,0 +1,18 @@
+{
+  "name": "noswiping",
+  "version": "1.0.0",
+  "description": "Electron App used to sound Alarm when device unplugged. Using as a theft deterent",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dev": "nodemon --exec electron ."
+  },
+  "author": "Saulo Gomes",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^23.1.3",
+    "electron-log": "^5.0.0-beta.16",
+    "nodemon": "^2.0.21"
+  }
+}
