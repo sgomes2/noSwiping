@@ -1,4 +1,16 @@
+// Creating battery status enum for simplicity
+const BatteryStatus = {
+  CHARGING: "charging",
+  NOT_CHARGING: "not_charging",
+};
+
+// Setting default audio track
+var audio = new Audio(`${__dirname}/../assets/audio/screaming.mp3`);
+audio.loop = true;
+
+// Keep track of battery charging status
 let batteryIsCharging = false;
+//  Keep track of alarm activation status
 let activated = false;
 
 var audio = new Audio(`${__dirname}/../assets/audio/screaming.mp3`);
