@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css"/>
     <title>No Swiping</title>
 </head>
 <body>
-    <h1>No Swiping</h1>
-    <button id="activate-button">Activate</button>
-    <h1 id="info-text">Alarm Deactivate</h1>
-    <h2 id="charging Info"></h2>
-
+    <div class="content">
+        <button id="activate-button">Activate</button>
+    <h1>Alarm: <span id="alarm-status"></span></h1>
+    <div style="color: red" id="charging-info"></div>
     <script src="js/alarm-monitor.js"></script>
 </body>
 </html>
