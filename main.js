@@ -2,8 +2,6 @@ const { app, BrowserWindow, Menu } = require("electron");
 const log = require("electron-log");
 
 // Set env
-process.env.NODE_ENV = "development";
-
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
 
@@ -12,8 +10,8 @@ let mainWindow;
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     title: "SysTop",
-    width: isDev ? 1000 : 355,
-    height: 800,
+    width: isDev ? 1000 : 300,
+    height: isDev ? 800 : 350,
     icon: "./assets/icons/icon.png",
     resizable: isDev ? true : false,
     backgroundColor: "white",
