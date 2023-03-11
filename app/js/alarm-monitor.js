@@ -1,5 +1,17 @@
-let batteryIsCharging = false;
-let activated = false;
+// Creating battery status enum for simplicity
+const BatteryStatus = {
+  CHARGING: "charging",
+  NOT_CHARGING: "not_charging",
+};
+
+// Setting default audio track
+var audio = new Audio(`${__dirname}/../assets/audio/screaming.mp3`);
+audio.loop = true;
+
+// Keep track of battery charging status
+let batteryIsCharging = true;
+//  Keep track of alarm activation status
+let activated = true;
 
 var audio = new Audio(`${__dirname}/../assets/audio/screaming.mp3`);
 
@@ -8,24 +20,33 @@ document.getElementById("activate-button").addEventListener("click", () => {
   activated = true;
 });
 
-document.getElementById("stop-button").addEventListener("click", () => {
-  activated = false;
-});
+// navigator.getBattery().then((battery) => {
+//   console.log("Battery Charging: " + batteryIsCharging);
+//   batteryIsCharging = battery.charging;
 
-let batteryPromise = navigator.getBattery();
-batteryPromise.then(setBatteryListener);
+//   battery.addEventListener("chargingchange", () => {
+//     batteryIsCharging = battery.charging;
+//     console.log("Battery Charging: " + batteryIsCharging);
+//   });
+// });
 
-function batteryCallback(batteryObject) {
-  printBatteryStatus(batteryObject);
-}
-function setBatteryListener(batteryObject) {
-  batteryObject.addEventListener("chargingchange", function (ev) {
-    console.log(batteryObject.charging);
-    if (activated && !batteryObject.charging) {
-      audio.play();
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-  });
-}
+const setActivateInfo = () => {
+  const activateButton = document.getElementById("activate-button");
+  activateButton.disabled = !batteryIsCharging;
+
+  if (activated) {
+    activateButton.innerText = "Deactivate Alarm";
+    activateButton.onclick = () => {
+      activated = false;
+      setActivateInfo();
+    };
+  } else {
+    activateButton.innerText = "Activate Alarm";
+    activateButton.onclick = () => {
+      activated = true;
+      setActivateInfo();
+    };
+  }
+};
+
+setActivateInfo(BatteryStatus.NOT_CHARGING);
