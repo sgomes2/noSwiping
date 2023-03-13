@@ -6,10 +6,11 @@ const isDev = process.env.NODE_ENV === "development" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
 
 let mainWindow;
+let audioSelectionWindow;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    title: "SysTop",
+    title: "No Swiping",
     width: isDev ? 1000 : 300,
     height: isDev ? 800 : 350,
     icon: "./assets/icons/icon_1024x1024.png",
@@ -27,6 +28,28 @@ function createMainWindow() {
   }
 
   mainWindow.loadFile("./app/index.html");
+}
+
+function createAudioSelectionWindow() {
+  audioSelectionWindow = new BrowserWindow({
+    title: "No Swiping",
+    width: isDev ? 1000 : 300,
+    height: isDev ? 800 : 350,
+    icon: "./assets/icons/icon_1024x1024.png",
+    resizable: isDev ? true : false,
+    backgroundColor: "white",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
+  if (isDev) {
+    console.log("enabling dev Tools");
+    audioSelectionWindow.webContents.openDevTools();
+  }
+
+  audioSelectionWindow.loadFile("./app/audio-selection.html");
 }
 
 app.on("ready", () => {
@@ -56,6 +79,15 @@ const menu = [
         },
       ]
     : []),
+  {
+    label: "Options",
+    submenu: [
+      {
+        label: "Select Alarm Audio",
+        click: createAudioSelectionWindow,
+      },
+    ],
+  },
 ];
 
 app.on("window-all-closed", () => {
