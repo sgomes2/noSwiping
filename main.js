@@ -1,9 +1,11 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const log = require("electron-log");
+const fs = require("fs");
 
 // Set env
 const isDev = process.env.NODE_ENV === "development" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
+const audioDir = `${__dirname}/assets/audio/`;
 
 let mainWindow;
 let audioSelectionWindow;
@@ -48,6 +50,14 @@ function createAudioSelectionWindow() {
     console.log("enabling dev Tools");
     audioSelectionWindow.webContents.openDevTools();
   }
+
+  fs.readdir(audioDir, (err, audioFiles) => {
+    if (err) {
+      console.log(err);
+    } else {
+      audioSelectionWindow.webContents.send("audio-list:get", audioFiles);
+    }
+  });
 
   audioSelectionWindow.loadFile("./app/audio-selection.html");
 }
